@@ -1,0 +1,16 @@
+### DSx_low_water_warning.tcl By Cheesy ###
+set version 1.0
+
+### Print a big red warning on the power off page if the water level is below the refill level.
+
+proc DSx_water_warning_message {} {
+  set actual_refill_level [expr {$::settings(water_refill_point) + $::de1(water_level_mm_correction)}]
+
+  if {$::de1(water_level) <= $actual_refill_level} {
+    return [translate "Water level low"]
+  } else {
+    return ""
+  }
+}
+
+add_de1_variable "DSx_power" 1280 300 -width 2560 -justify "center" -anchor "center" -font [DSx_font font 40] -fill "#ff0000" -textvariable {[DSx_water_warning_message]}
